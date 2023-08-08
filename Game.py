@@ -4,6 +4,7 @@ from Apple import Apple
 import time
 from pygame.locals import *
 
+
 SIZE = 20
 
 class Game:
@@ -11,10 +12,17 @@ class Game:
         pygame.init()
         self.surface = pygame.display.set_mode((1000,500))
         self.surface.fill((5,5,5))
-        self.snake = Snake(self.surface,2)
-        self.snake.draw()
+        self.snake = Snake(self.surface,19)
         self.apple = Apple(self.surface)
-        self.apple.draw()
+    
+    def show_menu(self):
+        self.surface.fill((5,5,5))
+        font = pygame.font.SysFont('arial',30)
+        message1 = font.render("Welcome to Snake Game!",True,(255,255,255))
+        self.surface.blit(message1,(200,200))
+        message2 = font.render("To play press enter, to quit press escape.",True,(255,255,255))
+        self.surface.blit(message2,(200,250))
+        pygame.display.flip()
 
     def score(self):
         font = pygame.font.SysFont('arial',30)
@@ -22,6 +30,7 @@ class Game:
         self.surface.blit(score,(10,10))
 
     def play(self):
+
         self.snake.crawl()
         self.apple.draw()
 
@@ -36,7 +45,6 @@ class Game:
             if self.collision(self.snake.x[0],self.snake.y[0],self.snake.x[i],self.snake.y[i]):
                raise "Game over"
 
-    
     def show_game_over(self):
         self.surface.fill((5,5,5))
         font = pygame.font.SysFont('arial',30)
@@ -60,6 +68,7 @@ class Game:
         running = True
         end = False
         pause = False
+        check = False
 
         while running:
             for event in pygame.event.get():
@@ -89,7 +98,13 @@ class Game:
             try:
                 if not end:
                     if not pause:
-                        self.play()
+                        if not check:
+                            self.show_menu()
+                        if event.type == KEYDOWN:
+                            if event.key == K_RETURN:
+                                check = True
+                        if check:
+                            self.play()
             except Exception as e:
                 self.show_game_over()
                 end = True
@@ -106,3 +121,6 @@ class Game:
     def reset(self):
         self.snake = Snake(self.surface,2)
         self.apple = Apple(self.surface)
+
+
+    
