@@ -7,6 +7,7 @@ from pygame.locals import *
 
 SIZE = 20
 
+
 class Game:
     def __init__(self):
         pygame.init()
@@ -22,15 +23,16 @@ class Game:
         self.surface.blit(message1,(200,200))
         message2 = font.render("To play press enter, to quit press escape.",True,(255,255,255))
         self.surface.blit(message2,(200,250))
+        message3 = font.render("Press E for Easy, M for Medium and H for hard.",True,(255,255,255))
+        self.surface.blit(message3,(200,300))
         pygame.display.flip()
-
+    
     def score(self):
         font = pygame.font.SysFont('arial',30)
         score = font.render("Score: "+str(self.snake.length),True,(255,255,255))
         self.surface.blit(score,(10,10))
 
     def play(self):
-
         self.snake.crawl()
         self.apple.draw()
 
@@ -69,6 +71,7 @@ class Game:
         end = False
         pause = False
         check = False
+        mode = 0.05
 
         while running:
             for event in pygame.event.get():
@@ -102,15 +105,15 @@ class Game:
                             self.show_menu()
                         if event.type == KEYDOWN:
                             if event.key == K_RETURN:
-                                check = True
-                        if check:
+                                check = True                         
+                        if check: 
                             self.play()
             except Exception as e:
                 self.show_game_over()
                 end = True
                 self.reset()
 
-            time.sleep(0.1)
+            time.sleep(mode)
 
     def collision(self,x1,y1,x2,y2):
         if x1 >= x2 and x1 < x2 + SIZE:
