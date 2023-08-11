@@ -4,13 +4,14 @@ from pygame.locals import *
 
 
 
+
 SIZE = 20
 
 class Snake:
     def __init__(self,parent_screen,length):
         self.length = length
         self.parent_screen = parent_screen
-        self.image = pygame.image.load("resources/circle.png").convert()
+        self.image = pygame.image.load("resources/snake.png").convert()
         self.x = [SIZE]*length
         self.y = [SIZE]*length
         self.direction = 'right'
@@ -21,7 +22,6 @@ class Snake:
         self.y.append(-1)
 
     def draw(self):
-        self.parent_screen.fill((5,5,5))
         for i in range(self.length):
             self.parent_screen.blit(self.image, (self.x[i], self.y[i]))
             self.DEFAULT_IMAGE_SIZE = (20, 20)

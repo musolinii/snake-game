@@ -17,7 +17,7 @@ class Game:
         self.apple = Apple(self.surface)
     
     def show_menu(self):
-        self.surface.fill((5,5,5))
+        self.render_background()
         font = pygame.font.SysFont('arial',30)
         message1 = font.render("Welcome to Snake Game!",True,(255,255,255))
         self.surface.blit(message1,(200,200))
@@ -33,6 +33,8 @@ class Game:
         self.surface.blit(score,(10,10))
 
     def play(self):
+    
+        self.render_background()
         self.snake.crawl()
         self.apple.draw()
 
@@ -48,7 +50,7 @@ class Game:
                raise "Game over"
 
     def show_game_over(self):
-        self.surface.fill((5,5,5))
+        self.render_background()
         font = pygame.font.SysFont('arial',30)
         message1 = font.render("Game over! Your score is "+str(self.snake.length),True,(255,255,255))
         self.surface.blit(message1,(200,200))
@@ -57,7 +59,7 @@ class Game:
         pygame.display.flip()
 
     def pause(self):
-        self.surface.fill((5,5,5))
+        self.render_background()
         font = pygame.font.SysFont('arial',30)
         message1 = font.render("Paused",True,(255,255,255))
         self.surface.blit(message1,(200,200))
@@ -71,7 +73,7 @@ class Game:
         end = False
         pause = False
         check = False
-        mode = 0.05
+        mode = 0.1
 
         while running:
             for event in pygame.event.get():
@@ -125,5 +127,10 @@ class Game:
         self.snake = Snake(self.surface,2)
         self.apple = Apple(self.surface)
 
+    def render_background(self):
+        bg = pygame.image.load("resources/snake-bg.jpg")
+        bg = pygame.transform.scale(bg, (1000, 500))
+
+        self.surface.blit(bg,(0,0))
 
     
